@@ -4,8 +4,8 @@ import javax.persistence.*;
 
 @Entity
 public class Todo {
-
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String content;
 	private Boolean completed = Boolean.FALSE;
@@ -35,12 +35,11 @@ public class Todo {
 		this.content = content;
 	}
 
-	public Boolean getcompleted() {
+	public Boolean getCompleted() {
 		return completed;
 	}
 
-	public void setcompleted(Boolean completed) {
+	public void setCompleted(Boolean completed) {
 		this.completed = completed;
 	}
-
 }
