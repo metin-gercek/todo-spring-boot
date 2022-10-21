@@ -25,7 +25,7 @@ public class TodoAppWithSpringApplication implements CommandLineRunner  {
     public void run(String... args) throws Exception {
 
         User user = new User();
-        user.setPassword("should be hashed");
+        user.setPassword("password");
         user.setUsername("John");
 
         Todo todo  = new Todo();

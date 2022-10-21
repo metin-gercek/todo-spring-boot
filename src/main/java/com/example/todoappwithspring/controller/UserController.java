@@ -8,6 +8,8 @@ import com.example.todoappwithspring.entity.Todo;
 import com.example.todoappwithspring.entity.User;
 import com.example.todoappwithspring.repository.TodoRepository;
 import com.example.todoappwithspring.repository.UserRepository;
+import com.example.todoappwithspring.request.AddTodoRequest;
+import com.example.todoappwithspring.request.AddUserRequest;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -27,17 +29,21 @@ public class UserController {
 	}
 
 	@PostMapping
-	public User addUser(@RequestBody User user) {
-
-		return userRepository.save(user);
-	}
+	public User addUser(@RequestBody AddUserRequest userRequest){
+        User user = new User();
+        user.setUsername(userRequest.getUsername());
+        user.setPassword(userRequest.getPassword());
+        return userRepository.save(user);
+    }
 
 	@PostMapping("/{userId}/todos")
-	public void addTodo(@PathVariable Long userId, @RequestBody Todo todo) {
-		User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
-		user.getTodoList().add(todo);
-		userRepository.save(user);
-	}
+	public void addTodo(@PathVariable Long userId, @RequestBody AddTodoRequest todoRequest){
+        User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
+        Todo todo = new Todo();
+        todo.setContent(todoRequest.getContent());
+        user.getTodoList().add(todo);
+        userRepository.save(user);
+    }
 
 	@PostMapping("/todos/{todoId}")
 	public void toggleTodoCompleted(@PathVariable Long todoId) {
